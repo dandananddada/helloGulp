@@ -4,24 +4,22 @@ var gulp = require('gulp'),
     sass = require('gulp-ruby-sass'),
     autoprefixer = require('gulp-autoprefixer'),
     minifycss = require('gulp-minify-css'),
-    jshint = require('gulp-jshint'),
     uglify = require('gulp-uglify'),
     imagemin = require('gulp-imagemin'),
     rename = require('gulp-rename'),
     concat = require('gulp-concat'),
     notify = require('gulp-notify'),
     cache = require('gulp-cache'),
-    embedlr = require('gulp-embedlr'),
     livereload = require('gulp-livereload'),
     webserver = require('gulp-webserver'),
     del = require('del');
 
-//Html
+//html
 gulp.task('html', function() {
     return gulp.src("app/*.html")
-        .pipe(embedlr())
         .pipe(gulp.dest('dist/'))
-        .pipe(livereload());
+        .pipe(livereload())
+        .pipe(notify({ message: 'html task complete' }));
 }); 
 
 // css
@@ -32,6 +30,7 @@ gulp.task('css', function() {
     .pipe(rename({ suffix: '.min' }))
     .pipe(minifycss())
     .pipe(gulp.dest('dist/css'))
+    .pipe(livereload())
     .pipe(notify({ message: 'css task complete' }));
 });
  
@@ -58,12 +57,15 @@ gulp.task('images', function() {
 
 // Clean
 gulp.task('clean', function(cb) {
-    del(['dist/css', 'dist/js', 'dist/img'], cb)
+    del(['dist/','app/css/**/*.css'], cb)
 });
  
  
 // Watch
 gulp.task('watch', function() {
+
+  //Watch .html files
+  gulp.watch('app/**/*.html', ['html']);
 
   // Watch .scss files
   gulp.watch('app/css/**/*.scss', ['css']);
@@ -84,7 +86,7 @@ gulp.task('watch', function() {
 
 //Build
 gulp.task('build', ['clean'], function() {
-    gulp.start('css', 'js', 'images');
+    gulp.start('html','css', 'js', 'images');
 });
 
 //Server
