@@ -35,7 +35,5 @@ Build静态资源文件
 #2015-06-11更新
 此次更新添加Jade-Sass-Coffee分支，如果你想使用Jade和Coffee，请使用此分支
 
-切换到Jade-Sass-Coffee分支
-
-$ git checkout Jade-Sass-Coffee
+	$ git checkout Jade-Sass-Coffee
 
