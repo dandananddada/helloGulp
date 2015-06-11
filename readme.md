@@ -11,7 +11,13 @@
 
 4.在app目录下创建你自己的静态资源文件。
 
-执行gulp命令会在dist目录下生成相应处理后的资源文件。
+执行build命令会生成浏览器可识别的资源文件。
+
+	$ gulp build
+
+执行server命令启动Http服务，预览开发。
+
+	$ gulp server
 
 #本项目定制的命令
 清理dist目录
@@ -25,3 +31,11 @@ Build静态资源文件
 启动http服务预览开发
 
     $ gulp server
+
+#2015-06-11更新
+此次更新添加Jade-Sass-Coffee分支，如果你想使用Jade和Coffee，请使用此分支
+
+切换到Jade-Sass-Coffee分支
+
+$ git checkout Jade-Sass-Coffee
+
