@@ -1,8 +1,9 @@
- 
+
 // Load plugins
 var gulp = require('gulp'),
     jade = require('gulp-jade'),
-    sass = require('gulp-ruby-sass'),
+    sass = require('gulp-sass'),
+    neat = require('node-neat').includePaths,
     coffee = require('gulp-coffee'),
     autoprefixer = require('gulp-autoprefixer'),
     minifycss = require('gulp-minify-css'),
@@ -17,10 +18,9 @@ var gulp = require('gulp'),
     webserver = require('gulp-webserver'),
     del = require('del'),
     coffeeStream = coffee({bare: true});
-
     coffeeStream.on('error', gutil.log);
 
-//html
+// HTML
 gulp.task('html', function() {
     return gulp.src("src/*.jade")
         .pipe(jade({ pretty: true}))
@@ -29,19 +29,19 @@ gulp.task('html', function() {
         .pipe(notify({ message: 'html task complete' }));
 }); 
 
-// css
+// CSS
 gulp.task('css', function() {
-  return sass('src/styles/', { style: 'expanded' })
-    .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
-    .pipe(gulp.dest('app/css'))
-    .pipe(rename({ suffix: '.min' }))
-    .pipe(minifycss())
-    .pipe(gulp.dest('dist/css'))
-    .pipe(livereload())
-    .pipe(notify({ message: 'css task complete' }));
+  return gulp.src(['src/styles/*.sass','src/styles/*.scss'])
+        .pipe(sass({ includePaths: ['styles'].concat(neat) }))
+        .pipe(gulp.dest('app/css'))
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(minifycss())
+        .pipe(gulp.dest('dist/css'))
+        .pipe(livereload())
+        .pipe(notify({ message: 'css task complete' }));
 });
  
-// js
+// JS
 gulp.task('js', function() {
   return gulp.src('src/scripts/**/*.coffee')
     .pipe(coffee({bare: true}).on('error', gutil.log))
@@ -77,7 +77,7 @@ gulp.task('watch', function() {
   gulp.watch('src/**/*.jade', ['html']);
 
   // Watch .scss files
-  gulp.watch('src/styles/**/*.scss', ['css']);
+  gulp.watch(['src/styles/**/*.scss','src/styles/**/*.sass'], ['css']);
  
   // Watch .js files
   gulp.watch('src/scripts/**/*.js', ['js']);
@@ -105,7 +105,7 @@ gulp.task('server', function() {
       livereload: true,
       open: true
     }));
-  gulp.start('watch');
+  gulp.start('build','watch');
 });
 
 // Default task
