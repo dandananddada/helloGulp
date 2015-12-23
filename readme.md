@@ -28,6 +28,10 @@ Build静态资源文件
 
     $ gulp build
 
+启动Jasmine测试
+
+    $ gulp test
+
 启动http服务预览开发
 
     $ gulp server
