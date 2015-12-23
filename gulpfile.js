@@ -12,6 +12,7 @@ var gulp = require('gulp'),
     cache = require('gulp-cache'),
     livereload = require('gulp-livereload'),
     webserver = require('gulp-webserver'),
+    jasmine = require('gulp-jasmine'),
     del = require('del');
 
 //html
@@ -88,6 +89,12 @@ gulp.task('watch', function() {
 gulp.task('build', ['clean'], function() {
     gulp.start('html','css', 'js', 'images');
 });
+
+gulp.task('test', function () {
+  return gulp.src('spec/**/*.js')
+    .pipe(jasmine());
+});
+
 
 //Server
 gulp.task('server', function() {
