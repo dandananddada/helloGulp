@@ -17,7 +17,8 @@ var gulp = require('gulp'),
     livereload = require('gulp-livereload'),
     webserver = require('gulp-webserver'),
     del = require('del'),
-    coffeeStream = coffee({bare: true});
+    coffeeStream = coffee({bare: true}),
+    jasmine = require('gulp-jasmine');
     coffeeStream.on('error', gutil.log);
 
 // HTML
@@ -66,7 +67,7 @@ gulp.task('images', function() {
 
 // Clean
 gulp.task('clean', function(cb) {
-    del(['dist/','app/'], cb)
+    del(['dist/','app/', 'spec/'], cb)
 });
  
  
@@ -96,6 +97,13 @@ gulp.task('watch', function() {
 //Build
 gulp.task('build', ['clean'], function() {
     gulp.start('html','css', 'js', 'images');
+});
+
+gulp.task('test', function () {
+  return gulp.src('src/test/**/*.coffee')
+    .pipe(coffee({bare: true}).on('error', gutil.log))
+    .pipe(gulp.dest('spec'))
+    .pipe(jasmine());
 });
 
 //Server

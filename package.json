@@ -22,7 +22,8 @@
     "gulp-rename": "^1.2.2",
     "gulp-util": "^3.0.5",
     "gulp": "^3.8.11",
-    "gulp-webserver": "^0.9.1"
+    "gulp-webserver": "^0.9.1",
+    "gulp-jasmine": "2.2.1"
   },
   "devDependencies": {},
   "scripts": {
