@@ -81,7 +81,7 @@ gulp.task('watch', function() {
   gulp.watch(['src/styles/**/*.scss','src/styles/**/*.sass'], ['css']);
  
   // Watch .js files
-  gulp.watch('src/scripts/**/*.js', ['js']);
+  gulp.watch('src/scripts/**/*.coffee', ['js']);
  
   // Watch image files
   gulp.watch('src/images/**/*', ['images']);
@@ -104,6 +104,10 @@ gulp.task('test', function () {
     .pipe(coffee({bare: true}).on('error', gutil.log))
     .pipe(gulp.dest('spec'))
     .pipe(jasmine());
+});
+
+gulp.task('tdd', function(){
+  gulp.watch(['src/scripts/**/*.coffee','src/test/**/*.coffee'], ['test']);
 });
 
 //Server
